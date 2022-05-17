@@ -4,14 +4,18 @@
  * @Author: ZhangHongYu
  * @Date: 2022-02-05 18:23:00
  * @LastEditors: ZhangHongYu
- * @LastEditTime: 2022-05-16 19:19:45
+ * @LastEditTime: 2022-05-17 10:33:57
 -->
 ### 关于本项目
 本项目为2020-2021年ASC世界大学生超级计算机竞赛第3题，题目为训练机器学习模型完成一个完形填空形式的NLP任务，我们采用ALBert模型，使用赛方给定的数据集进行微调和测试, 最终在ALBert-xxlarge的预训练模型下达到90%的准确率
 
 
-### 环境配置
-在我的机子上是Python3.6和Pytorch1.2
+### 环境依赖
+运行以下命令安装环境依赖：
+
+```shell
+pip install -r requirements.txt
+```
 
 
 ### 数据集

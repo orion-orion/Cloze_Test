@@ -1,0 +1,5 @@
+pytorch>=1.2.0
+pretrained_roberta
+numpy
+transformers
+nltk
