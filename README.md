@@ -4,8 +4,15 @@
  * @Author: ZhangHongYu
  * @Date: 2022-02-05 18:23:00
  * @LastEditors: ZhangHongYu
- * @LastEditTime: 2022-05-17 11:11:59
+ * @LastEditTime: 2022-05-17 22:03:13
 -->
+
+# 2020-2021年ASC第3题: 使用ALBert模型完成完形填空的NLP任务
+
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/orion-orion/Cloze_Test)
+[![](https://img.shields.io/github/license/orion-orion/Cloze_Test)](https://github.com/orion-orion/Cloze_Test/blob/master/LICENSE)
+[![](https://img.shields.io/github/stars/orion-orion/Cloze_Test?style=social)](https://github.com/orion-orion/Cloze_Test)
+[![](https://img.shields.io/github/issues/orion-orion/Cloze_Test)](https://github.com/orion-orion/Cloze_Test/issues)
 ### 关于本项目
 本项目为2020-2021年ASC世界大学生超级计算机竞赛第3题，题目为训练机器学习模型完成一个完形填空形式的NLP任务，我们采用ALBert模型，使用赛方给定的数据集进行微调和测试, 最终在ALBert-xxlarge的预训练模型下达到89%的准确率。
 
@@ -37,22 +44,8 @@ python3 data_util.py
 （注意：若有需要，你可以修改`data_util.py`中语料库的本地路径）
 
 
-### 模型微调/测试/预测 
-对于模型微调，运行：
-```
-python -u main.py \
-    --output_dir debug-exp/ \
-    --do_train \
-    --bert_model albert-xxlarge-v2
-```
-对于模型测试，运行（需要先训练好微调后的模型）：
-```
-python -u main.py \
-    --output_dir debug-exp/ \
-    --do_eval \
-    --bert_model albert-xxlarge-v2
-```
-根据赛方数据预测出答案，运行（同样需要需要先训练好微调后的模型）:
+### 模型预测 
+根据赛方数据预测出答案，运行（需要需要先训练好微调后的模型，上面已给出下载链接）:
 ```
 python -u main.py \
     --output_dir debug-exp/ \
