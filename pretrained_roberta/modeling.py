@@ -167,6 +167,6 @@ if __name__ == '__main__':
     ans = torch.zeros(bsz).long()
     inp = [articles, articles_mask, ops, ops_mask, question_id, question_pos]
     tgt = ans
-    model = ALbertForCloze.from_pretrained('/chpc/home/stu-ysfang-a/RoBERTa-data/roberta-large',
+    model = ALbertForCloze.from_pretrained('/home/RoBERTa-data/roberta-large',
           cache_dir=PYTORCH_PRETRAINED_BERT_CACHE / 'distributed_{}'.format(-1))
     loss, acc = model(inp, tgt)

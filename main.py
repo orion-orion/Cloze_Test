@@ -18,6 +18,7 @@ import pretrained_roberta.modeling
 from transformers.file_utils import PYTORCH_PRETRAINED_BERT_CACHE
 import functools
 from timeit import default_timer as timer
+import warnings
 
 import pdb
 
@@ -40,7 +41,37 @@ def get_logger(log_path, **kwargs):
 def accuracy(out, labels):
     outputs = np.argmax(out, axis=1)
     return np.sum(outputs == labels)
-            
+
+def copy_optimizer_params_to_model(named_params_model, named_params_optimizer):
+    """ Utility function for optimize_on_cpu and 16-bits training.
+        Copy the parameters optimized on CPU/RAM back to the model on GPU
+    """
+    for (name_opti, param_opti), (name_model, param_model) in zip(named_params_optimizer, named_params_model):
+        if name_opti != name_model:
+            warnings.warn("name_opti != name_model: {} {}".format(name_opti, name_model))
+            raise ValueError
+        param_model.data.copy_(param_opti.data)
+
+
+def set_optimizer_params_grad(named_params_optimizer, named_params_model, test_nan=False):
+    """ Utility function for optimize_on_cpu and 16-bits training.
+        Copy the gradient of the GPU parameters to the CPU/RAMM copy of the model
+    """
+    is_nan = False
+    for (name_opti, param_opti), (name_model, param_model) in zip(named_params_optimizer, named_params_model):
+        if name_opti != name_model:
+            warnings.warn("name_opti != name_model: {} {}".format(name_opti, name_model))
+            raise ValueError
+        if param_model.grad is not None:
+            if test_nan and torch.isnan(param_model.grad).sum() > 0:
+                is_nan = True
+            if param_opti.grad is None:
+                param_opti.grad = torch.nn.Parameter(param_opti.data.new().resize_(*param_opti.data.size()))
+            param_opti.grad.data.copy_(param_model.grad.data)
+        else:
+            param_opti.grad = None
+    return is_nan
+
 def main():
     parser = argparse.ArgumentParser()
 
@@ -341,7 +372,7 @@ def main():
             assert flag == True
         for name in sorted(dic_out):
             dic_format[name] = dic_out[name]
-        with open("./test/answer.json", 'w') as file_obj:
+        with open("./prediction/answer.json", 'w') as file_obj:
             json.dump(dic_format, file_obj)
         logging("***** done! *****")
 if __name__ == "__main__":

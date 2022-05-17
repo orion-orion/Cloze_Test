@@ -1,3 +1,11 @@
+'''
+Descripttion: 
+Version: 1.0
+Author: ZhangHongYu
+Date: 2022-02-05 18:23:00
+LastEditors: ZhangHongYu
+LastEditTime: 2022-05-17 16:26:12
+'''
 import os
 import sys
 import json
@@ -10,7 +18,7 @@ PAD, MASK, CLS, SEP = '[PAD]', '[MASK]', '[CLS]', '[SEP]'
 bert_tokenizer = AlbertTokenizer.from_pretrained('albert-xxlarge-v2')
 max=-1
 cnt=0
-tot=0;
+tot=0
 for file in os.listdir(file_path):
     if file.endswith(".json"):
         with open(os.path.join(file_path,file),'r') as f:

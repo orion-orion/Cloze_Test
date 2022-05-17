@@ -1,5 +1,6 @@
-pytorch>=1.2.0
-pretrained_roberta
+torch>=1.2.0
 numpy
 transformers
 nltk
+absl-py
+sentencepiece
